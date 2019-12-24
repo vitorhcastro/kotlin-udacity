@@ -120,19 +120,19 @@ fun formatNights(nights: List<SleepNight>, resources: Resources): Spanned {
         nights.forEach {
             append("<br>")
             append(resources.getString(R.string.start_time))
-            append("\t${convertLongToDateString(it.startTimeMillis)}<br>")
-            if (it.endTimeMilli != it.startTimeMillis) {
+            append("\t${convertLongToDateString(it.startTimeMilli)}<br>")
+            if (it.endTimeMilli != it.startTimeMilli) {
                 append(resources.getString(R.string.end_time))
                 append("\t${convertLongToDateString(it.endTimeMilli)}<br>")
                 append(resources.getString(R.string.quality))
                 append("\t${convertNumericQualityToString(it.sleepQuality, resources)}<br>")
                 append(resources.getString(R.string.hours_slept))
                 // Hours
-                append("\t ${it.endTimeMilli.minus(it.startTimeMillis) / 1000 / 60 / 60}:")
+                append("\t ${it.endTimeMilli.minus(it.startTimeMilli) / 1000 / 60 / 60}:")
                 // Minutes
-                append("${it.endTimeMilli.minus(it.startTimeMillis) / 1000 / 60}:")
+                append("${it.endTimeMilli.minus(it.startTimeMilli) / 1000 / 60}:")
                 // Seconds
-                append("${it.endTimeMilli.minus(it.startTimeMillis) / 1000}<br><br>")
+                append("${it.endTimeMilli.minus(it.startTimeMilli) / 1000}<br><br>")
             }
         }
     }
