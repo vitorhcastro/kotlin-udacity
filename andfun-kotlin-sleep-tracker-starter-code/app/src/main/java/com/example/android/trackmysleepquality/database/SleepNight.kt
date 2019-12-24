@@ -33,4 +33,26 @@ data class SleepNight(
 
         @ColumnInfo(name = "quality_rating")
         var sleepQuality : Int = -1
-)
+
+
+) {
+        override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as SleepNight
+
+                if (startTimeMilli != other.startTimeMilli) return false
+                if (endTimeMilli != other.endTimeMilli) return false
+                if (sleepQuality != other.sleepQuality) return false
+
+                return true
+        }
+
+        override fun hashCode(): Int {
+                var result = startTimeMilli.hashCode()
+                result = 31 * result + endTimeMilli.hashCode()
+                result = 31 * result + sleepQuality
+                return result
+        }
+}
