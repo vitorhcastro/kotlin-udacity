@@ -23,10 +23,10 @@
      the whole ViewModel, so that we can access the LiveData,
      click handlers, and state variables. -->
     <data>
+
         <variable
             name="sleepQualityViewModel"
             type="com.example.android.trackmysleepquality.sleepquality.SleepQualityViewModel" />
-
     </data>
 
     <!-- Start of the visible fragment layout using ConstraintLayout -->
