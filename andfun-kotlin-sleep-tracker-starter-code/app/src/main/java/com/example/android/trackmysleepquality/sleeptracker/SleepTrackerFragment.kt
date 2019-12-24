@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -57,8 +56,8 @@ class SleepTrackerFragment : Fragment() {
         var viewModel = ViewModelProviders
                 .of(this, viewModelFactory)
                 .get(SleepTrackerViewModel::class.java)
-        val sleepNightAdapter  = SleepNightAdapter(SleepNightListener { nightId ->
-            Toast.makeText(context, "${nightId}", Toast.LENGTH_LONG).show()
+        val sleepNightAdapter = SleepNightAdapter(SleepNightListener { nightId ->
+            viewModel.onSleepNightClicked(nightId)
         })
         binding.sleepList.adapter = sleepNightAdapter
 
@@ -82,13 +81,22 @@ class SleepTrackerFragment : Fragment() {
         })
 
         viewModel.showSnackbarEvent.observe(this, Observer {
-            if(it){
+            if (it) {
                 Snackbar.make(
                         activity!!.findViewById(android.R.id.content),
                         getString(R.string.cleared_message),
                         Snackbar.LENGTH_SHORT
                 ).show()
                 viewModel.doneShowingSnackbar()
+            }
+        })
+
+        viewModel.navigateToSleepDataQuality.observe(this, Observer { night ->
+            night?.let {
+                this.findNavController().navigate(
+                        SleepTrackerFragmentDirections.actionSleepTrackerFragmentToSleepDetailFragment(night)
+                )
+                viewModel.onSleepNightDataQualityNavigated()
             }
         })
 
