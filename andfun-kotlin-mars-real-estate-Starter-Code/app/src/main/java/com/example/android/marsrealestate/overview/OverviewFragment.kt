@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.marsrealestate.R
 import com.example.android.marsrealestate.databinding.FragmentOverviewBinding
+import com.example.android.marsrealestate.network.MarsApiFilter
 
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.
@@ -52,12 +53,12 @@ class OverviewFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
-        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener{
+        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
             viewModel.displayPropertyDetails(it)
         })
 
         viewModel.navigateToSelectedProperty.observe(this, Observer {
-            if(null!=it){
+            if (null != it) {
                 this.findNavController().navigate(
                         OverviewFragmentDirections.actionShowDetail(it)
                 )
@@ -67,6 +68,17 @@ class OverviewFragment : Fragment() {
 
         setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.updateFilter(
+                when (item.itemId) {
+                    R.id.show_rent_menu -> MarsApiFilter.SHOW_RENT
+                    R.id.show_buy_menu -> MarsApiFilter.SHOW_BUY
+                    else -> MarsApiFilter.SHOW_ALL
+                }
+        )
+        return true
     }
 
     /**
