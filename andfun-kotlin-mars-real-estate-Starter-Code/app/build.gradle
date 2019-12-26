@@ -65,6 +65,7 @@ dependencies {
 
     // Core with Ktx
     implementation "androidx.core:core-ktx:$version_core"
+    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
