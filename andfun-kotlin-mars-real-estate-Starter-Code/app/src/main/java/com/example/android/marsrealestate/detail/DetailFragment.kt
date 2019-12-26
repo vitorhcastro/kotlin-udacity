@@ -31,10 +31,15 @@ class DetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        @Suppress("UNUSED_VARIABLE")
+
         val application = requireNotNull(activity).application
+        var marsProperty = DetailFragmentArgs.fromBundle(arguments!!).selectedProperty
+        var viewModelFactory = DetailViewModelFactory(marsProperty, application)
         val binding = FragmentDetailBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
+        binding.viewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(DetailViewModel::class.java)
         return binding.root
     }
 }

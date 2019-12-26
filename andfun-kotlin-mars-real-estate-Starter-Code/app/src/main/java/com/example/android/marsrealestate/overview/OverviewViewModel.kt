@@ -32,22 +32,22 @@ import kotlinx.coroutines.launch
  */
 class OverviewViewModel : ViewModel() {
 
-    enum class MarsApiStatus{ LOADING, ERROR, DONE  }
+    enum class MarsApiStatus { LOADING, ERROR, DONE }
 
-    // The internal MutableLiveData String that stores the status of the most recent request
     private val _status = MutableLiveData<MarsApiStatus>()
-
-    // The external immutable LiveData for the request status String
     val status: LiveData<MarsApiStatus>
         get() = _status
 
     private val _properties = MutableLiveData<List<MarsProperty>>()
-
     val properties: LiveData<List<MarsProperty>>
         get() = _properties
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
+    val navigateToSelectedProperty: LiveData<MarsProperty>
+        get() = _navigateToSelectedProperty
 
     /**
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
@@ -72,6 +72,14 @@ class OverviewViewModel : ViewModel() {
                 _properties.value = ArrayList()
             }
         }
+    }
+
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = marsProperty
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
     }
 
     override fun onCleared() {
